@@ -1,15 +1,13 @@
-```
 /*
-https://api.github.com/repos/timhutton/twitter-archive-parser/stats/contributors
-https://api.github.com/repos/timhutton/twitter-archive-parser/pulls
-https://api.github.com/repos/timhutton/twitter-archive-parser/stats/contributors
+https://api.github.com/repos/microsoft/calculator/stats/contributors
+https://api.github.com/repos/microsoft/calculator/pulls
+https://api.github.com/repos/microsoft/calculator/stats/contributors
 
 
  */
 
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URI;
@@ -21,7 +19,7 @@ public class JSONData {
     public static void main(String[] args) {
         String jsonData = null;
         try {
-            jsonData = getJson("https://api.github.com/repos/timhutton/twitter-archive-parser/stats/contributors");
+            jsonData = getJson("https://api.github.com/repos/microsoft/calculator/stats/contributors");
             JSONArray json = new JSONArray(jsonData); // Convert text to object
             System.out.println(json.toString(4)); // Print it with specified indentation
         } catch (IOException e) {
@@ -46,16 +44,14 @@ public class JSONData {
     }
 
     public static String pullHistory() throws IOException, InterruptedException {
-        return getJson("https://api.github.com/repos/timhutton/twitter-archive-parser/pulls");
+        return getJson("https://api.github.com/repos/microsoft/calculator/pulls");
     }
     
     public static String commitHistory() throws IOException, InterruptedException {
-        return getJson("https://api.github.com/repos/timhutton/twitter-archive-parser/commits");
+        return getJson("https://api.github.com/repos/microsoft/calculator/commits");
     }
     
     public static String contributors() throws IOException, InterruptedException {
-        return getJson("https://api.github.com/repos/timhutton/twitter-archive-parser/stats/contributors");
+        return getJson("https://api.github.com/repos/microsoft/calculator/stats/contributors");
     }
 }
-
-```
