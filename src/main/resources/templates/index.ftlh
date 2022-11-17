@@ -48,27 +48,34 @@
         }
     </script>
     <script type="text/javascript">
-      google.charts.load('current', {'packages':['bar']});
+      google.charts.load("current", {packages:['corechart']});
       google.charts.setOnLoadCallback(drawChart);
-
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Year', 'Sales', 'Expenses', 'Profit'],
-          ['2014', 1000, 400, 200],
-          ['2015', 1170, 460, 250],
-          ['2016', 660, 1120, 300],
-          ['2017', 1030, 540, 350]
+          ["Element", "Density"],
+          ["Copper", 8.94],
+          ["Silver", 10.49],
+          ["Gold", 19.30],
+          ["Platinum", 21.45]
         ]);
 
+        // var view = new google.visualization.DataView(data);
+        // view.setColumns([0, 1,
+        //                  { calc: "stringify",
+        //                    sourceColumn: 1,
+        //                    type: "string",
+        //                    role: "annotation" },
+        //                  2]);
+
         var options = {
-          chart: {
-            title: 'Company Performance',
-            subtitle: 'Sales, Expenses, and Profit: 2014-2017',
-          },
-          bars: 'horizontal', // Required for Material Bar Charts.
+          title: "Density of Precious Metals, in g/cm^3",
+          width: 600,
+          height: 400,
+          bar: {groupWidth: "95%"},
+          legend: { position: "none",
+                    textStyle: {color: 'white'}},
           backgroundColor: "transparent",
           chartArea:{backgroundColor: "transparent"},
-          legend: {textStyle: {color: 'white'}},
           titleTextStyle: {color: 'white'},
           animation: {
             duration: 1000,
@@ -76,11 +83,9 @@
             startup: true
           }
         };
-
-        var chart = new google.charts.Bar(document.getElementById('barchart_material'));
-
-        chart.draw(data, google.charts.Bar.convertOptions(options));
-      }
+        var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+        chart.draw(data, options);
+    }
     </script>
   </head>
   <body>
@@ -89,7 +94,7 @@
       <div class="bodyElements">
         <div style="width: 100%; display: table; background-color: hsl(0deg 0% 89%); color: black;">
           <div style="display: table-row">
-            <div style="width: 540px; display: table-cell;">
+            <div style="padding-left: 20px; width: 540px; display: table-cell;">
               <h4>Welcome to Cooperate!</h4>
             </div>
             <div style="display: table-cell;">
@@ -97,9 +102,11 @@
             </div>
           </div>
         </div>
-        <div>
-          <div id="piechart" style="width: 400px; height: 400px; text-align: -webkit-left"></div>
-          <div id="barchart_material" style="width: 400px; height: 400px; text-align: -webkit-right"></div>
+        <div style="padding:10px; width: 100%; display: table;">
+          <div style="display: table-row">
+            <div id="piechart" style="width: 50%; display: table-cell;"></div>
+            <div id="columnchart_values" style="width:50%; display: table-cell; text-align: -webkit-right;"></div>
+          </div>
         </div>
         <!-- <div style="height: 500px; width: auto; text-align: -webkit-right;">
           <canvas id="myChart" style="display: block; box-sizing: border-box; height: 300px; width: auto;" width="auto" height="300px"></canvas>
