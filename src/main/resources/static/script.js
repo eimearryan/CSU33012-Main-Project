@@ -72,16 +72,15 @@ function drawColumnChart() {
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(newChart);
 function newChart(result){
-  var list = JSON.parse(document.getElementById("jsonData").value);
-  console.log(list[0].user.login);
+  var jsonData = JSON.parse(document.getElementById("jsonData").value);
   var data = new google.visualization.DataTable();
-            // assumes "word" is a string and "count" is a number
-            data.addColumn('string', 'word');
-            data.addColumn('number', 'count');
+  // assumes "word" is a string and "count" is a number
+  data.addColumn('string', 'word');
+  data.addColumn('number', 'count');
 
-            for (var i = 0; i < jsonData.length; i++) {
-                data.addRow([jsonData[i].word, jsonData[i].count]);
-            }
+  for (var i = 0; i < jsonData.length; i++) {
+      data.addRow([jsonData[i].user.login, 5]);
+  }
 
   var options = {
     title: "Density of Precious Metals, in g/cm^3",
@@ -99,6 +98,6 @@ function newChart(result){
       startup: true
     }
   };
-  var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+  var chart = new google.visualization.ColumnChart(document.getElementById("chartData"));
   chart.draw(data, options);
 }

@@ -55,7 +55,7 @@ class JSONDataRequests {
     @GetMapping("/")
     public String pullHistory(Model model) {
 		// model.addAttribute("result", null);
-        JSONArray result = null;
+        String result = "";
         try {
             result = JSONData.pullHistory();
         } catch (IOException e) {

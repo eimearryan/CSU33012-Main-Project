@@ -41,19 +41,8 @@ public class JSONData {
         return response.body();
     }
 
-    public static JSONArray pullHistory() throws IOException, InterruptedException {
-        // return getJson("https://api.github.com/repos/timhutton/twitter-archive-parser/pulls");
-        String jsonData = null;
-        JSONArray json = null;
-        try {
-            jsonData = getJson("https://api.github.com/repos/microsoft/calculator/pulls");
-            json = new JSONArray(jsonData); // Convert text to object
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return json;
+    public static String pullHistory() throws IOException, InterruptedException {
+        return getJson("https://api.github.com/repos/microsoft/calculator/pulls");
     }
 
     public static String commitHistory() throws IOException, InterruptedException {
