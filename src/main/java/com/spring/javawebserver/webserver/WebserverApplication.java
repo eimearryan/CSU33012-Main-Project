@@ -55,7 +55,7 @@ class JSONDataRequests {
     @GetMapping("/")
     public String pullHistory(Model model) {
 		// model.addAttribute("result", null);
-        String result = "";
+        JSONObject result = null;
         try {
             result = JSONData.pullHistory();
         } catch (IOException e) {
@@ -63,25 +63,34 @@ class JSONDataRequests {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-		// HashMap<String,Integer> map = new HashMap<String,Integer>();
-		// try {
-		// 	if (result != null) {
-		// 		for (int i = 0; i < result.length(); ++i) {
-		// 			JSONObject obj = result.getJSONObject(i).getJSONObject("user");
-		// 			String login = obj.getString("login");
-		// 			map.put(login, map.get(login)!=null?map.get(login)+1:1);
-		// 		}
-		// 	}
-		// } catch (JSONException e) {
-		// 	// handle exception
-		// }
-		// Object[] mapKeys = map.keySet().toArray();
-		// Object[] mapVals = map.values().toArray();
+		// System.out.println(result);
+		HashMap<String,Integer> map = new HashMap<String,Integer>();
+		try {
+			if (result != null) {
+				for (int i = 1; i <= 10; ++i) {
+					JSONArray curArr = result.getJSONObject("page "+i).getJSONArray("items");
+					for (int j = 0; j < curArr.length(); j++) {
+						JSONObject obj = curArr.getJSONObject(j).getJSONObject("user");
+						String login = obj.getString("login");
+						map.put(login, map.get(login)!=null?map.get(login)+1:1);
+					}
+				}
+			}
+		} catch (JSONException e) {
+			// handle exception
+		}
+
+		Object[] mapKeys = map.keySet().toArray();
+		Object[] mapVals = map.values().toArray();
 		// Object[] returnVal = new Object[mapKeys.length];
-		// for (int i = 0; i < mapKeys.length; i++) {
-		// 	returnVal[i]=new Object[]{mapKeys[i].toString(), Integer.parseInt(mapVals[i].toString())};
-		// }
-		model.addAttribute("result", result);
+		String output="[";
+		for (int i = 0; i < mapKeys.length; i++) {
+			output+="{\"name\":"+"\""+mapKeys[i]+"\","+"\"value\":"+mapVals[i]+"}";
+			if (i != mapKeys.length-1) output+=",";
+		}
+		output +="]";
+		// System.out.println(output);
+		model.addAttribute("result", output);
 		return "index";
     }
 

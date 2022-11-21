@@ -28,9 +28,8 @@
             <div id="columnchart_values" style="width:50%; display: table-cell; text-align: -webkit-right;"></div>
           </div>
         </div>
-        <button onclick="newChart()">Click me</button>
         <input type="hidden" id="jsonData" value="${result}">
-        <div id="chartData" style="width: 50%;"></div>
+        <div id="chartData" style="width: 1000px; height: 1000px"></div>
       </div>
     </div>
   </body>

@@ -59,6 +59,12 @@ function drawColumnChart() {
     backgroundColor: "transparent",
     chartArea:{backgroundColor: "transparent"},
     titleTextStyle: {color: 'white'},
+    vAxis: {
+      textStyle:{color: 'white'}
+    },
+    hAxis: {
+      textStyle:{color: 'white'}
+    },
     animation: {
       duration: 1000,
       easing: 'in',
@@ -72,26 +78,34 @@ function drawColumnChart() {
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(newChart);
 function newChart(result){
-  var jsonData = JSON.parse(document.getElementById("jsonData").value);
+  var jsonUnchanged = document.getElementById("jsonData").value;
+  var jsonData = JSON.parse(jsonUnchanged);
   var data = new google.visualization.DataTable();
+  console.log(jsonData[2]);
   // assumes "word" is a string and "count" is a number
   data.addColumn('string', 'word');
   data.addColumn('number', 'count');
 
   for (var i = 0; i < jsonData.length; i++) {
-      data.addRow([jsonData[i].user.login, 5]);
+      data.addRow([jsonData[i].name, jsonData[i].value]);
   }
 
   var options = {
     title: "Density of Precious Metals, in g/cm^3",
-    width: 600,
-    height: 400,
+    width: 1920,
+    height: 1000,
     bar: {groupWidth: "95%"},
     legend: { position: "none",
     textStyle: {color: 'white'}},
     backgroundColor: "transparent",
     chartArea:{backgroundColor: "transparent"},
     titleTextStyle: {color: 'white'},
+    vAxis: {
+      textStyle:{color: 'white'}
+    },
+    hAxis: {
+      textStyle:{color: 'white'}
+    },
     animation: {
       duration: 1000,
       easing: 'in',
