@@ -78,21 +78,23 @@ function drawColumnChart() {
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(newChart);
 function newChart(result){
-  var jsonUnchanged = document.getElementById("jsonData").value;
-  var jsonData = JSON.parse(jsonUnchanged);
+  var jsonUnchanged = document.getElementById("jsonDataOpen").value;
+  var issues = JSON.parse(jsonUnchanged);
+  // var closed = JSON.parse(document.getElementById("jsonDataClosed").value);
   var data = new google.visualization.DataTable();
-  console.log(jsonData[2]);
+  // console.log(issues[2]);
   // assumes "word" is a string and "count" is a number
-  data.addColumn('string', 'word');
-  data.addColumn('number', 'count');
+  data.addColumn('string', 'user');
+  data.addColumn('number', 'open');
+  data.addColumn('number', 'closed');
 
-  for (var i = 0; i < jsonData.length; i++) {
-      data.addRow([jsonData[i].name, jsonData[i].value]);
+  for (var i = 0; i < issues.length; i++) {
+    data.addRow([issues[i].name, issues[i].open, issues[i].closed]);
   }
 
   var options = {
     title: "Density of Precious Metals, in g/cm^3",
-    width: 1920,
+    width: 1600,
     height: 1000,
     bar: {groupWidth: "95%"},
     legend: { position: "none",
@@ -106,6 +108,7 @@ function newChart(result){
     hAxis: {
       textStyle:{color: 'white'}
     },
+    isStacked: true,
     animation: {
       duration: 1000,
       easing: 'in',

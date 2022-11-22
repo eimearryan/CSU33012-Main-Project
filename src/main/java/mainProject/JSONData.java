@@ -54,7 +54,7 @@ public class JSONData {
                 // System.out.println(url +"&page="+i);
             }
             // json = new JSONObject(jsonData); // Convert text to object
-            System.out.println(json.toString(4)); // Print it with specified indentation
+            // System.out.println(json.toString(4)); // Print it with specified indentation
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

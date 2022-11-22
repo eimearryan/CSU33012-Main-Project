@@ -28,7 +28,7 @@
             <div id="columnchart_values" style="width:50%; display: table-cell; text-align: -webkit-right;"></div>
           </div>
         </div>
-        <input type="hidden" id="jsonData" value="${result}">
+        <input type="hidden" id="jsonDataOpen" value="${outputOpen}">
         <div id="chartData" style="width: 1000px; height: 1000px"></div>
       </div>
     </div>

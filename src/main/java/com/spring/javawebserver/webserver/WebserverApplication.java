@@ -64,7 +64,8 @@ class JSONDataRequests {
             e.printStackTrace();
         }
 		// System.out.println(result);
-		HashMap<String,Integer> map = new HashMap<String,Integer>();
+		HashMap<String,Integer> mapOpen = new HashMap<String,Integer>();
+		HashMap<String,Integer> mapClosed = new HashMap<String,Integer>();
 		try {
 			if (result != null) {
 				for (int i = 1; i <= 10; ++i) {
@@ -72,7 +73,16 @@ class JSONDataRequests {
 					for (int j = 0; j < curArr.length(); j++) {
 						JSONObject obj = curArr.getJSONObject(j).getJSONObject("user");
 						String login = obj.getString("login");
-						map.put(login, map.get(login)!=null?map.get(login)+1:1);
+						if ( !login.equalsIgnoreCase("MicrosoftIssueBot")) {
+							if(curArr.getJSONObject(j).getString("state").equals("open")) {
+								mapOpen.put(login, mapOpen.get(login)!=null?mapOpen.get(login)+1:1);
+								if (mapClosed.get(login) == null) mapClosed.put(login, 0);
+							}
+							else {
+								mapClosed.put(login, mapClosed.get(login)!=null?mapClosed.get(login)+1:1);
+								if (mapOpen.get(login) == null) mapOpen.put(login, 0);
+							}
+						}
 					}
 				}
 			}
@@ -80,17 +90,33 @@ class JSONDataRequests {
 			// handle exception
 		}
 
-		Object[] mapKeys = map.keySet().toArray();
-		Object[] mapVals = map.values().toArray();
+		Object[] mapKeys = mapOpen.keySet().toArray();
+		Object[] mapVals = mapOpen.values().toArray();
 		// Object[] returnVal = new Object[mapKeys.length];
-		String output="[";
+		String outputOpen="[";
 		for (int i = 0; i < mapKeys.length; i++) {
-			output+="{\"name\":"+"\""+mapKeys[i]+"\","+"\"value\":"+mapVals[i]+"}";
-			if (i != mapKeys.length-1) output+=",";
+			if (Integer.parseInt(mapVals[i].toString()) > 1 || mapClosed.get(mapKeys[i]) > 1) {
+				outputOpen+="{\"name\":\""+mapKeys[i]+"\",\"open\":"+mapVals[i]+",\"closed\":"+mapClosed.get(mapKeys[i])+"}";
+				outputOpen+=",";
+			}
+			if ( i == mapKeys.length-1 ) outputOpen = outputOpen.substring(0, outputOpen.length() - 1);
 		}
-		output +="]";
-		// System.out.println(output);
-		model.addAttribute("result", output);
+		outputOpen +="]";
+		System.out.println(outputOpen);
+		// mapKeys = mapClosed.keySet().toArray();
+		// mapVals = mapClosed.values().toArray();
+		// String outputClosed="[";
+		// for (int i = 0; i < mapKeys.length; i++) {
+		// 	if (Integer.parseInt(mapVals[i].toString()) > 1) {
+		// 		outputClosed+="{\"name\":"+"\""+mapKeys[i]+"\","+"\"open\":"+mapVals[i]+"}";
+		// 		outputClosed+=",";
+		// 	}
+		// 	if ( i == mapKeys.length-1 ) outputClosed = outputClosed.substring(0, outputClosed.length() - 1);
+		// }
+		// outputClosed +="]";
+		// System.out.println(outputClosed);
+		model.addAttribute("outputOpen", outputOpen);
+		// model.addAttribute("outputClosed", outputClosed);
 		return "index";
     }
 
