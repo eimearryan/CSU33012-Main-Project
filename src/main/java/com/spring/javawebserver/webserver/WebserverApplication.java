@@ -54,7 +54,6 @@ public class WebserverApplication {
 class JSONDataRequests {
     @GetMapping("/")
     public String pullHistory(Model model) {
-		// model.addAttribute("result", null);
         JSONObject result = null;
         try {
             result = JSONData.pullHistory();
@@ -63,7 +62,6 @@ class JSONDataRequests {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-		// System.out.println(result);
 		HashMap<String,Integer> mapOpen = new HashMap<String,Integer>();
 		HashMap<String,Integer> mapClosed = new HashMap<String,Integer>();
 		try {
@@ -92,7 +90,6 @@ class JSONDataRequests {
 
 		Object[] mapKeys = mapOpen.keySet().toArray();
 		Object[] mapVals = mapOpen.values().toArray();
-		// Object[] returnVal = new Object[mapKeys.length];
 		String outputOpen="[";
 		for (int i = 0; i < mapKeys.length; i++) {
 			if (Integer.parseInt(mapVals[i].toString()) > 1 || mapClosed.get(mapKeys[i]) > 1) {
@@ -102,21 +99,8 @@ class JSONDataRequests {
 			if ( i == mapKeys.length-1 ) outputOpen = outputOpen.substring(0, outputOpen.length() - 1);
 		}
 		outputOpen +="]";
-		System.out.println(outputOpen);
-		// mapKeys = mapClosed.keySet().toArray();
-		// mapVals = mapClosed.values().toArray();
-		// String outputClosed="[";
-		// for (int i = 0; i < mapKeys.length; i++) {
-		// 	if (Integer.parseInt(mapVals[i].toString()) > 1) {
-		// 		outputClosed+="{\"name\":"+"\""+mapKeys[i]+"\","+"\"open\":"+mapVals[i]+"}";
-		// 		outputClosed+=",";
-		// 	}
-		// 	if ( i == mapKeys.length-1 ) outputClosed = outputClosed.substring(0, outputClosed.length() - 1);
-		// }
-		// outputClosed +="]";
-		// System.out.println(outputClosed);
+		// System.out.println(outputOpen);
 		model.addAttribute("outputOpen", outputOpen);
-		// model.addAttribute("outputClosed", outputClosed);
 		return "index";
     }
 
