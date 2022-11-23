@@ -39,7 +39,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 // import lombok.Getter;
 // import lombok.NoArgsConstructor;
 // import lombok.Setter;
-import mainProject.JSONData;
+
 
 @SpringBootApplication
 public class WebserverApplication {
