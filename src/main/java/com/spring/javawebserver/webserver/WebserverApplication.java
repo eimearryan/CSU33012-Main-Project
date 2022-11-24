@@ -9,6 +9,7 @@
 package com.spring.javawebserver.webserver;
 
 // import java.io.File;
+import java.util.ArrayList;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,12 +65,14 @@ class JSONDataRequests {
         }
 		HashMap<String,Integer> mapOpen = new HashMap<String,Integer>();
 		HashMap<String,Integer> mapClosed = new HashMap<String,Integer>();
+    String outputIssues = "[";
+   
 		try {
 			if (result != null) {
 				for (int i = 1; i <= 10; ++i) {
 					JSONArray curArr = result.getJSONObject("page "+i).getJSONArray("items");
 					for (int j = 0; j < curArr.length(); j++) {
-						JSONObject obj = curArr.getJSONObject(j).getJSONObject("user");
+            JSONObject obj = curArr.getJSONObject(j).getJSONObject("user");
 						String login = obj.getString("login");
 						if ( !login.equalsIgnoreCase("MicrosoftIssueBot")) {
 							if(curArr.getJSONObject(j).getString("state").equals("open")) {
@@ -80,16 +83,31 @@ class JSONDataRequests {
 								mapClosed.put(login, mapClosed.get(login)!=null?mapClosed.get(login)+1:1);
 								if (mapOpen.get(login) == null) mapOpen.put(login, 0);
 							}
+                   
+              int issueID = curArr.getJSONObject(j).getInt("number");//
+              String title = curArr.getJSONObject(j).getString("title");//
+              String openDate = curArr.getJSONObject(j).getString("created_at");//
+              String closeDate = "";//
+              
+              if (curArr.getJSONObject(j).has("closed_at") && !curArr.getJSONObject(j).isNull("closed_at")){//
+                 closeDate = curArr.getJSONObject(j).getString("closed_at");//
+              }//
+              else closeDate = "notClosed";//
+              outputIssues += "{\"ID\":\""+issueID+"\",\"user\":"+login+",\"title\":"+title+",\"opendate:\":"+openDate+",\"closedate:\":"+closeDate+"}";//
+              outputIssues += ",";//
+              if (i == 10 && j == curArr.length()-1) outputIssues = outputIssues.substring(0, outputIssues.length() - 1);
 						}
 					}
 				}
 			}
 		} catch (JSONException e) {
-			// handle exception
+			 //handle exception
 		}
+    outputIssues += "]";
 
 		Object[] mapKeys = mapOpen.keySet().toArray();
 		Object[] mapVals = mapOpen.values().toArray();
+   
 		String outputOpen="[";
 		for (int i = 0; i < mapKeys.length; i++) {
 			if (Integer.parseInt(mapVals[i].toString()) > 1 || mapClosed.get(mapKeys[i]) > 1) {
@@ -99,8 +117,10 @@ class JSONDataRequests {
 			if ( i == mapKeys.length-1 ) outputOpen = outputOpen.substring(0, outputOpen.length() - 1);
 		}
 		outputOpen +="]";
-		// System.out.println(outputOpen);
+	  System.out.println(outputOpen);//
+    System.out.println(outputIssues);//
 		model.addAttribute("outputOpen", outputOpen);
+    model.addAttribute("outputIssues", outputIssues);
 		return "index";
     }
 

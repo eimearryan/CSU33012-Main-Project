@@ -79,16 +79,25 @@ google.charts.load('current', {'packages':['bar']});
 google.charts.setOnLoadCallback(newChart);
 function newChart(){
   var jsonUnchanged = document.getElementById("jsonDataOpen").value;
+  
+  console.log(jsonUnchanged);//
+  
   var issues = JSON.parse(jsonUnchanged);
-
+  
+  console.log(issues);
+  
   var data = new google.visualization.DataTable();
   data.addColumn('string', 'User');
   data.addColumn('number', 'Opened Issues');
   data.addColumn('number', 'Closed Issues');
+  
+  console.log(data);
 
   for (var i = 0; i < issues.length; i++) {
     data.addRow([issues[i].name, issues[i].open, issues[i].closed]);
   }
+  
+  console.log(data);
 
   var options = {
     title: "Open vs Closed Issues per User",
@@ -116,6 +125,8 @@ function newChart(){
   var chart = new google.charts.Bar(document.getElementById('chartData'));
   chart.draw(data, google.charts.Bar.convertOptions(options));
 }
+
+
 
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(percentageChart);

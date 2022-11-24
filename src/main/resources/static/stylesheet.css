@@ -3,16 +3,17 @@
 }
 
 .header {
-  padding: 3vw;
+  padding: 1.5vw;
   position: fixed;
+  text-align: center;
   z-index: 2;
+  background: #c3c3c3;
   box-sizing: border-box;
   pointer-events: auto;
-  background: black;
   width: 100%;
-  color: white;
+  color: #444444;
   font-size: calc((2 - 1) * calc(.012 * min(100vh, 900px)) + 1rem);
-  font-family: Work Sans;
+  font-family: Montserrat;
   font-weight: 700;
   font-style: normal;
   letter-spacing: .01em;
