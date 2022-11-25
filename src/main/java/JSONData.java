@@ -8,6 +8,7 @@ https://api.github.com/repos/microsoft/calculator/stats/contributors
 
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URI;
@@ -50,8 +51,34 @@ public class JSONData {
     public static String commitHistory() throws IOException, InterruptedException {
         return getJson("https://api.github.com/repos/microsoft/calculator/commits");
     }
-    
+
     public static String contributors() throws IOException, InterruptedException {
-        return getJson("https://api.github.com/repos/microsoft/calculator/stats/contributors");
+        JSONArray data = new JSONArray();
+        JSONArray contributors = new JSONArray(getJson("https://api.github.com/repos/microsoft/calculator/stats/contributors"));
+        for (int i =0; i<contributors.length(); i++){
+            JSONObject tmpcontributors = contributors.getJSONObject(i);
+            JSONObject tmpData = new JSONObject();
+
+            tmpData.put("total", tmpcontributors.get("total"));
+
+
+            JSONObject user = tmpcontributors.getJSONObject("author");
+            tmpData.put("user", user.get("login"));
+
+
+            JSONArray weeks = tmpcontributors.getJSONArray("weeks");
+            int additions = 0;
+            int deletions = 0;
+            for (int k = 0; k< weeks.length(); k++){
+                JSONObject tmp = weeks.getJSONObject(k);
+                additions+= tmp.getInt("a");
+                deletions+= tmp.getInt("d");
+            }
+            tmpData.put("additions", additions);
+            tmpData.put("deletions", deletions);
+            data.put(tmpData);
+        }
+        System.out.println(data.toString(4));
+        return data.toString();
     }
 }
