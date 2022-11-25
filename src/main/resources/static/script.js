@@ -126,7 +126,17 @@ function newChart(){
   chart.draw(data, google.charts.Bar.convertOptions(options));
 }
 
-
+google.charts.load('current', {'packages':['bar']});
+google.charts.setOnLoadCallback(testFunc);
+function testFunc(){
+  var jsonUnchanged = document.getElementById("jsonDataIssues").value;
+  
+  console.log(jsonUnchanged);//
+  
+  var issues = JSON.parse(jsonUnchanged);
+  
+  console.log(issues);
+}
 
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(percentageChart);

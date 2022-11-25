@@ -93,7 +93,12 @@ class JSONDataRequests {
                  closeDate = curArr.getJSONObject(j).getString("closed_at");//
               }//
               else closeDate = "notClosed";//
-              outputIssues += "{\"ID\":\""+issueID+"\",\"user\":"+login+",\"title\":"+title+",\"opendate:\":"+openDate+",\"closedate:\":"+closeDate+"}";//
+              
+              title = title.replace("\n", "");
+              title = title.replace("\"", "");
+              title = title.replace("\t", " ");
+              
+              outputIssues += "{\"ID\":"+issueID+",\"user\":\""+login+"\",\"title\":\""+title+"\",\"opendate\":\""+openDate+"\",\"closedate\":\""+closeDate+"\"}";//
               outputIssues += ",";//
               if (i == 10 && j == curArr.length()-1) outputIssues = outputIssues.substring(0, outputIssues.length() - 1);
 						}
@@ -117,8 +122,8 @@ class JSONDataRequests {
 			if ( i == mapKeys.length-1 ) outputOpen = outputOpen.substring(0, outputOpen.length() - 1);
 		}
 		outputOpen +="]";
-	  System.out.println(outputOpen);//
-    System.out.println(outputIssues);//
+	  //System.out.println(outputOpen);
+    //System.out.println(outputIssues);
 		model.addAttribute("outputOpen", outputOpen);
     model.addAttribute("outputIssues", outputIssues);
 		return "index";
