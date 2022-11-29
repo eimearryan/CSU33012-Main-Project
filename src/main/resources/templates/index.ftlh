@@ -19,12 +19,15 @@
           <div style="display: table-row">
             <div id="piechart" style="width: 50%; display: table-cell;"></div>
             <div id="columnchart_values" style="width:50%; display: table-cell; text-align: -webkit-right;"></div>
+            <div id="columnchart_values2" style="width:50%; display: table-cell; text-align: -webkit-right;"></div>
           </div>
         </div>
         <input type="hidden" id="jsonDataOpen" value="${outputOpen}">
         <input type="hidden" id="jsonDataIssues" value="${outputIssues}">
         <input type="hidden" id="jsonDataContrib" value="${outputContrib}">
         <div id="chartData" style="width: 1000px; height: 1000px"></div>
+        <div id="chartDataAddDel" style="width: 1000px; height: 1000px"></div>
+        <div id="chartDataContrib" style="width: 1000px; height: 1000px"></div>
       </div>
     </div>
   </body>

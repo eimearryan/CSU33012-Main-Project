@@ -127,21 +127,99 @@ function newChart(){
 }
 
 google.charts.load('current', {'packages':['bar']});
-google.charts.setOnLoadCallback(testFunc);
-function testFunc(){
-  var jsonUnchanged = document.getElementById("jsonDataIssues").value;
+google.charts.setOnLoadCallback(addDelChart);
+function addDelChart(){
+  //var jsonUnchanged = document.getElementById("jsonDataIssues").value;
   
-  console.log(jsonUnchanged);//
+  //console.log(jsonUnchanged);//
   
-  var issues = JSON.parse(jsonUnchanged);
+  //var issues = JSON.parse(jsonUnchanged);
   
-  console.log(issues);
+  //console.log(issues);
   
-  var jsonUnchanged2 = document.getElementById("jsonDataContrib").value;
-  var issues2 = JSON.parse(jsonUnchanged2);
+  var jsonUnchanged = document.getElementById("jsonDataContrib").value;
+  var contributions = JSON.parse(jsonUnchanged);
+  console.log(contributions);
   
-  console.log(issues2);
+  var data = new google.visualization.DataTable();
+  data.addColumn('string', 'User');
+  data.addColumn('number', 'Additions');
+  data.addColumn('number', 'Deletions');
+
+  for (var i = 0; i < contributions.length; i++) {
+    data.addRow([contributions[i].user, contributions[i].additions, contributions[i].deletions]);
+  }
+
+  var options = {
+    title: "Commits",
+    width: 1300,
+    height: 900,
+    bar: {groupWidth: "95%"},
+    legend: { position: "none",
+    textStyle: {color: 'white'}},
+    backgroundColor: "transparent",
+    chartArea:{backgroundColor: "transparent"},
+    titleTextStyle: {color: 'white'},
+    vAxis: {
+      textStyle:{color: 'white'}
+    },
+    hAxis: {
+      textStyle:{color: 'white'}
+    },
+    // isStacked: true,
+    // animation: {
+    //   duration: 1000,
+    //   easing: 'in',
+    //   startup: true
+    // }
+  };
+  var chart = new google.charts.Bar(document.getElementById('chartDataAddDel'));
+  chart.draw(data, google.charts.Bar.convertOptions(options));
 }
+
+google.charts.load('current', {'packages':['bar']});
+google.charts.setOnLoadCallback(commitChart);
+function commitChart(){
+  var jsonUnchanged = document.getElementById("jsonDataContrib").value;
+  var contributions = JSON.parse(jsonUnchanged);
+  console.log(contributions);
+  
+  var data = new google.visualization.DataTable();
+  data.addColumn('string', 'User');
+  data.addColumn('number', 'Commits');
+
+  for (var i = 0; i < contributions.length; i++) {
+    data.addRow([contributions[i].user, contributions[i].total]);
+  }
+
+  var options = {
+    title: "Commits",
+    width: 1300,
+    height: 900,
+    bar: {groupWidth: "95%"},
+    legend: { position: "none",
+    textStyle: {color: 'white'}},
+    backgroundColor: "transparent",
+    chartArea:{backgroundColor: "transparent"},
+    titleTextStyle: {color: 'white'},
+    vAxis: {
+      textStyle:{color: 'white'}
+    },
+    hAxis: {
+      textStyle:{color: 'white'}
+    },
+    // isStacked: true,
+    // animation: {
+    //   duration: 1000,
+    //   easing: 'in',
+    //   startup: true
+    // }
+  };
+  var chart = new google.charts.Bar(document.getElementById('chartDataContrib'));
+  chart.draw(data, google.charts.Bar.convertOptions(options));
+}
+
+
 
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(percentageChart);
