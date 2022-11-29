@@ -136,6 +136,11 @@ function testFunc(){
   var issues = JSON.parse(jsonUnchanged);
   
   console.log(issues);
+  
+  var jsonUnchanged2 = document.getElementById("jsonDataContrib").value;
+  var issues2 = JSON.parse(jsonUnchanged2);
+  
+  console.log(issues2);
 }
 
 google.charts.load('current', {'packages':['corechart']});

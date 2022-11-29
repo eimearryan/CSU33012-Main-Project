@@ -1,3 +1,5 @@
+//file not accessed by application
+
 /*
 https://api.github.com/repos/microsoft/calculator/stats/contributors
 https://api.github.com/repos/microsoft/calculator/pulls
@@ -17,10 +19,10 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class JSONData {
-    public static void main(String[] args) {
+    /* public static void main(String[] args) {
         String jsonData = null;
         try {
-            jsonData = getJson("https://api.github.com/repos/microsoft/calculator/stats/contributors");
+            jsonData = getJson("https://api.github.com/repos/timhutton/twitter-archive-parser/stats/contributors");
             JSONArray json = new JSONArray(jsonData); // Convert text to object
             System.out.println(json.toString(4)); // Print it with specified indentation
         } catch (IOException e) {
@@ -30,8 +32,7 @@ public class JSONData {
         }
 
     }
-
-
+*/
 
     // Performs a GET request from given endpoint
     public static String getJson(String getEndpoint) throws IOException, InterruptedException {

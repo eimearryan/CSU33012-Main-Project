@@ -54,10 +54,10 @@ public class WebserverApplication {
 @Controller
 class JSONDataRequests {
     @GetMapping("/")
-    public String pullHistory(Model model) {
+    public String filterData(Model model) {
         JSONObject result = null;
         try {
-            result = JSONData.pullHistory();
+            result = JSONData.issues();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -126,6 +126,18 @@ class JSONDataRequests {
     //System.out.println(outputIssues);
 		model.addAttribute("outputOpen", outputOpen);
     model.addAttribute("outputIssues", outputIssues);
+    
+    /////////////////////////////////////////////////////////////
+    String outputContrib = "";
+    try {
+            outputContrib = JSONData.contributors();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    model.addAttribute("outputContrib", outputContrib);
+    
 		return "index";
     }
 

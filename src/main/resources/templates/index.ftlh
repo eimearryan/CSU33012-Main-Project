@@ -23,6 +23,7 @@
         </div>
         <input type="hidden" id="jsonDataOpen" value="${outputOpen}">
         <input type="hidden" id="jsonDataIssues" value="${outputIssues}">
+        <input type="hidden" id="jsonDataContrib" value="${outputContrib}">
         <div id="chartData" style="width: 1000px; height: 1000px"></div>
       </div>
     </div>
