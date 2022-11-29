@@ -1,17 +1,18 @@
 .bodyElements {
-  background: black;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 .header {
-  padding: 1.5vw;
+  padding: 2.5vw;
   position: fixed;
   text-align: center;
   z-index: 2;
-  background: #c3c3c3;
+  background: white;
   box-sizing: border-box;
   pointer-events: auto;
   width: 100%;
-  color: #444444;
+  color: black;
   font-size: calc((2 - 1) * calc(.012 * min(100vh, 900px)) + 1rem);
   font-family: Montserrat;
   font-weight: 700;
@@ -32,5 +33,5 @@ h4 {
 
 body {
   margin: 0;
-  background-color: black;
+  background-color: #343434;
 }
