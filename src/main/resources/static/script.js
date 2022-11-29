@@ -3,23 +3,23 @@ google.charts.setOnLoadCallback(openedIssues);
 function openedIssues(){
   var jsonUnchanged = document.getElementById("jsonDataOpen").value;
 
-  console.log(jsonUnchanged);//
+  //console.log(jsonUnchanged);//
 
   var issues = JSON.parse(jsonUnchanged);
 
-  console.log(issues);
+  //console.log(issues);
 
   var data = new google.visualization.DataTable();
   data.addColumn('string', 'User');
   data.addColumn('number', 'Opened Issues');
 
-  console.log(data);
+  //console.log(data);
 
   for (var i = 0; i < issues.length; i++) {
     if (issues[i].open > 0) data.addRow([issues[i].name, issues[i].open]);
   }
   data.sort({column: 1});
-  console.log(data);
+  //console.log(data);
 
   var options = {
     title: "Open Issues per User",
@@ -52,23 +52,23 @@ google.charts.setOnLoadCallback(closedIssues);
 function closedIssues(){
   var jsonUnchanged = document.getElementById("jsonDataOpen").value;
 
-  console.log(jsonUnchanged);//
+  //console.log(jsonUnchanged);//
 
   var issues = JSON.parse(jsonUnchanged);
 
-  console.log(issues);
+  //console.log(issues);
 
   var data = new google.visualization.DataTable();
   data.addColumn('string', 'User');
   data.addColumn('number', 'Closed Issues');
 
-  console.log(data);
+  //console.log(data);
 
   for (var i = 0; i < issues.length; i++) {
     if ( issues[i].closed > 0 ) data.addRow([issues[i].name, issues[i].closed]);
   }
   data.sort({column: 1});
-  console.log(data);
+  //console.log(data);
 
   var options = {
     title: "Closed Issues per User",
@@ -110,7 +110,7 @@ function addChart(){
 
   var jsonUnchanged = document.getElementById("jsonDataContrib").value;
   var contributions = JSON.parse(jsonUnchanged);
-  console.log(contributions);
+  //console.log(contributions);
 
   var data = new google.visualization.DataTable();
   data.addColumn('string', 'User');
@@ -164,7 +164,7 @@ function delChart(){
 
   var jsonUnchanged = document.getElementById("jsonDataContrib").value;
   var contributions = JSON.parse(jsonUnchanged);
-  console.log(contributions);
+  //console.log(contributions);
 
   var data = new google.visualization.DataTable();
   data.addColumn('string', 'User');
@@ -189,7 +189,7 @@ function delChart(){
     chartArea:{backgroundColor: "transparent"},
     titleTextStyle: {color: 'white'},
     vAxis: {
-      textStyle:{color: 'white'}
+      textStyle:{color: 'white'},
     },
     hAxis: {
       textStyle:{color: 'white'}
@@ -210,7 +210,7 @@ google.charts.setOnLoadCallback(commitChart);
 function commitChart(){
   var jsonUnchanged = document.getElementById("jsonDataContrib").value;
   var contributions = JSON.parse(jsonUnchanged);
-  console.log(contributions);
+  //console.log(contributions);
 
   var data = new google.visualization.DataTable();
   data.addColumn('string', 'User');
@@ -280,16 +280,57 @@ function percentageChart() {
   };
   var chart = new google.visualization.PieChart(document.getElementById('piechart'));
   chart.draw(data, options);
-  // var percent = 0;
-  // var handler = setInterval(function(){
-  //   // values increment
-  //   percent += 1;
-  //   // apply new values
-  //   data.setValue(0, 1, percent);
-  //   data.setValue(1, 1, 100 - percent);
-  //   // update the pie
-  //   chart.draw(data, options);
-  //   // check if we have reached the desired value
-  //   if (percent > 74) clearInterval(handler);
-  // }, 30);
+}
+
+
+$(document).ready(function() {
+  $("#btn").on("click", function() {
+    userChart();
+  });
+});
+
+google.charts.load('current', {'packages':['line']});
+
+function userChart() {
+  var data = new google.visualization.DataTable();
+  var jsonUnchanged = document.getElementById("jsonDataContrib").value;
+  var contributions = JSON.parse(jsonUnchanged);
+  var user = document.getElementById("userSearch").value;
+
+  data.addColumn('string', 'Date');
+  data.addColumn('number', 'Additions');
+  data.addColumn('number', 'Deletions');
+  data.addColumn('number', 'Commits');
+
+  var newArray = contributions.filter(function (el) {
+    return el.user === user;
+  });
+
+  console.log(newArray[0].all);
+
+  for (var i = 0; i < newArray[0].all.length; i++) {
+    data.addRow([newArray[0].all[i].string[0], newArray[0].all[i].a, newArray[0].all[i].d, newArray[0].all[i].c]);
+  }
+
+  var options = {
+    chart: {
+      title: newArray[0].user,
+    },
+    width: 1500,
+    legend:{textStyle: {color: 'white'}},
+    backgroundColor: "transparent",
+    chartArea:{backgroundColor: "transparent"},
+    titleTextStyle: {color: 'white'},
+    vAxis: {
+      textStyle:{color: 'white'},
+      scaleType: 'log'
+    },
+    hAxis: {
+      textStyle:{color: 'white'}
+    },
+  };
+
+  var chart = new google.charts.Line(document.getElementById('lineUser'));
+
+  chart.draw(data, google.charts.Line.convertOptions(options));
 }

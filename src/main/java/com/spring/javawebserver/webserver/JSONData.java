@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.Date;
 import java.util.HashMap;
 
 
@@ -17,9 +18,10 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.text.SimpleDateFormat;
 
 public class JSONData {
-   
+
     // Performs a GET request from given endpoint
     public static String getJson(String getEndpoint) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
@@ -63,16 +65,29 @@ public class JSONData {
             JSONArray weeks = tmpcontributors.getJSONArray("weeks");
             int additions = 0;
             int deletions = 0;
-            for (int k = 0; k< weeks.length(); k++){
+            JSONArray weeksList = new JSONArray();
+            int k = 0;
+            while ( weeks.getJSONObject(k).getInt("c") == 0 &&  k< weeks.length()) k++;
+            while( k< weeks.length() ){
                 JSONObject tmp = weeks.getJSONObject(k);
                 additions+= tmp.getInt("a");
                 deletions+= tmp.getInt("d");
+                Date date = new java.util.Date(tmp.getInt("w")*1000L);
+                // the format of your date
+                SimpleDateFormat sdf = new java.text.SimpleDateFormat("EEE, MMM d, ''yy");
+                // give a timezone reference for formatting (see comment at the bottom)
+                sdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT+0"));
+                String formattedDate = sdf.format(date);
+                tmp.append("string", formattedDate);
+                weeksList.put(tmp);
+                k++;
             }
+            tmpData.put("all", weeksList);
             tmpData.put("additions", additions);
             tmpData.put("deletions", deletions);
             data.put(tmpData);
         }
         return data.toString();
     }
-    
+
 }
