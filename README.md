@@ -1,33 +1,16 @@
 # CSU33012-Main-Project
 
-## Database Setup
-Install MySQL on your machine: https://dev.mysql.com/downloads/mysql/
+## Running the app
 
-Open MySQL Shell.
+Install Docker on your machine https://docs.docker.com/get-docker/
 
-If in JS mode, enter ```'\sql'``` to enter SQL mode.
+Pull the image to your local machine using the command:
 ```
-\connect root@localhost
-CREATE DATABASE sweng;
-CREATE USER 'user'@'localhost' IDENTIFIED BY 'my_password';
-GRANT ALL PRIVILEGES ON * . * TO 'user'@'localhost';
-GRANT ALL ON sweng.* TO 'user'@'localhost' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
+docker pull eimearryan/csu33012-main-project:firstpush
+```
+Run the app using the command:
+```
+docker run --name=local-container -p 8080:8080 eimearryan/csu33012-main-project:firstpush
 ```
 
-(To see your databases: ```show databases;```)
-
-Set database to sweng: 
-```
-use sweng;
-```
-Create table for storing data:
-```
-CREATE TABLE results (
-	id INT NOT NULL AUTO_INCREMENT, 
-	PULLHISTORY JSON, 
-	COMMITHISTORY JSON, 
-	CONTRIBUTORS JSON, 
-	PRIMARY KEY (ID)
-);
-```
+The app will be available on [localhost:8080](http://localhost:8080/)
