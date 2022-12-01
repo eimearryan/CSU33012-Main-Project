@@ -1,5 +1,9 @@
 # CSU33012-Main-Project
 
+## Video Presentation
+
+https://clipchamp.com/watch/yCJ3VmALc7j
+
 ## Running the app
 
 Install Docker on your machine https://docs.docker.com/get-docker/
